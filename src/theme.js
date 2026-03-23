@@ -2,6 +2,7 @@ const theme = {
   colors: {
     textPrimary: "#24292e",
     textSecondary: "#586069",
+    textWhite: "#ffffff",
     primary: "#0366d6",
     navPrimary: "#ffffff",
     navBackground: "#24292e",
@@ -20,8 +21,8 @@ const theme = {
   },
   padding: {
     navPadding: 10,
-    navPaddingTop: 20
-  }
+    navPaddingTop: 20,
+  },
 };
 
 export default theme;
