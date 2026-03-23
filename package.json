@@ -1,9 +1,22 @@
 {
   "name": "rate-repository-app",
   "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "homepage": "https://github.com/HannsHau/rate-repository-app#readme",
+  "bugs": {
+    "url": "https://github.com/HannsHau/rate-repository-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HannsHau/rate-repository-app.git"
+  },
+  "license": "ISC",
+  "author": "HannsHau",
+  "type": "commonjs",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --localhost",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -19,6 +32,5 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
-  },
-  "private": true
+  }
 }
