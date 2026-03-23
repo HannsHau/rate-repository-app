@@ -1,13 +1,16 @@
-import { Pressable, Text } from "react-native"
+import { Pressable, Text } from "react-native";
+import { Link } from "react-router-native";
 
+const AppBarTab = ({ text, link, style }) => {
+  let newStyle = { ...style, textAlign: "center" };
+  const onPressFunction = () => {};
+  return (
+    <Pressable onPress={onPressFunction}>
+      <Link to={link}>
+        <Text style={newStyle}>{text}</Text>
+      </Link>
+    </Pressable>
+  );
+};
 
-
-const AppBarTab = ({text, style}) => {
-  
-  let newStyle = style;
-  const onPressFunction = () => {
-  }
-  return (<Pressable onPress={onPressFunction}><Text style={newStyle}>{text}</Text></Pressable>)
-}
-
-export default AppBarTab
+export default AppBarTab;
