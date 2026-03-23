@@ -5,7 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>
-        Open up App.js to start working on your app!, Oh it is really real time. But you need to refresh manually the browser.
+        Open up App.js to start working on your app!, Oh it is really real time!!!🚀
       </Text>
       <StatusBar style="auto" />
     </View>
