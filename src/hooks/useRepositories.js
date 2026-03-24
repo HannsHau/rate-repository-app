@@ -2,11 +2,10 @@ import { useQuery } from "@apollo/client/react";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
 const useRepositories = () => {
+  // eslint-disable-next-line no-unused-vars
   const { data, loading, error, refetch } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: "cache-and-network",
   });
-
-  console.log('error: ', error)
 
   const repositories = data?.repositories;
 
