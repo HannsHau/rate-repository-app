@@ -3,6 +3,9 @@ import Constants from "expo-constants";
 import AppBarTab from "./AppBarTab";
 import theme from "../theme";
 
+import { useQuery } from "@apollo/client/react";
+import { ME } from "../graphql/queries";
+
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
@@ -22,14 +25,30 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { data, loading, error, refetch } = useQuery(ME, {
+    fetchPolicy: "cache-and-network",
+  });
+
+  const username = data?.me?.username;
+  if (username) {
+    console.log("User: ", username);
+  } else {
+    console.log("no User");
+  }
+
   return (
-    <View >
+    <View>
       <ScrollView horizontal style={styles.container}>
         <View style={styles.item}>
           <AppBarTab style={styles.item} link="/" text="Repositories" />
         </View>
         <View style={styles.item}>
-          <AppBarTab style={styles.item} link="/signIn" text="Sign In" />
+          {username ? (
+            <AppBarTab style={styles.item} link="/signIn" text="Sign Out" />
+          ) : (
+            <AppBarTab style={styles.item} link="/signIn" text="Sign In" />
+          )}
         </View>
       </ScrollView>
     </View>
