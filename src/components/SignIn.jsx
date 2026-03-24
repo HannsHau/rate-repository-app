@@ -1,5 +1,6 @@
 import { TextInput, View, Pressable, StyleSheet } from "react-native";
 import Text from "./Text";
+import useSignIn from "../hooks/useSignIn";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -50,7 +51,7 @@ const LogInForm = ({ onSubmit }) => {
         placeholder="username"
         value={formik.values.username}
         onChangeText={formik.handleChange("username")}
-        onBlur={formik.handleBlur('username')}
+        onBlur={formik.handleBlur("username")}
       />
       {formik.touched.username && formik.errors.username && (
         <Text style={styles.error}>{formik.errors.username}</Text>
@@ -61,7 +62,7 @@ const LogInForm = ({ onSubmit }) => {
         secureTextEntry="true"
         value={formik.values.password}
         onChangeText={formik.handleChange("password")}
-        onBlur={formik.handleBlur('password')}
+        onBlur={formik.handleBlur("password")}
       />
       {formik.touched.password && formik.errors.password && (
         <Text style={styles.error}>{formik.errors.password}</Text>
@@ -80,9 +81,20 @@ const LogInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    const username = values.username;
+  const [signIn] = useSignIn();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
     console.log("Username: ", username);
+
+    try {
+      const { data } = await signIn({ username, password });
+      console.log(data.authenticate);
+    } catch (e) {
+      console.log(e);
+    }
+
+    
   };
 
   return <LogInForm onSubmit={onSubmit} />;
