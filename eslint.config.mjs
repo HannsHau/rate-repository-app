@@ -19,7 +19,7 @@ export default defineConfig([
   js.configs.recommended,
   {
     files: ["**/*.js", "**/*.jsx"],
-    extends: compat.extends("eslint:recommended", "plugin:react/recommended"),
+    extends: compat.extends("eslint:recommended", "plugin:react/recommended", "plugin:jest/recommended"),
 
     plugins: {
       react,

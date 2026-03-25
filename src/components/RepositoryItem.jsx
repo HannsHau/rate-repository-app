@@ -41,7 +41,7 @@ const RepositoryItem = ({
   ownerAvatarUrl,
 }) => {
   return (
-    <View style={styles.flexContainer}>
+    <View style={styles.flexContainer} testID="repositoryItem">
       <View style={styles.flexContainerRow}>
         <Image
           style={styles.tinyLogo}
