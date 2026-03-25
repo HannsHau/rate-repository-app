@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   flexItemShort: {
     flexGrow: 0,
     padding: 5,
+    fontWeights: 700,
     color: "#f6f6f6",
     backgroundColor: "#0366d6",
     borderRadius: 5,

@@ -28,7 +28,7 @@ export const RepositoryListContainer = ({ repositories, navigate }) => {
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => (
-        <Pressable onPress={() => onPressFunction(item.id, navigate)}  >
+        <Pressable onPress={() => onPressFunction(item.id, navigate)}>
           <RepositoryItem
             fullName={item.fullName}
             description={item.description}
@@ -50,7 +50,9 @@ const RepositoryList = () => {
   const { repositories } = useRepositories();
   const navigate = useNavigate();
 
-  return <RepositoryListContainer repositories={repositories} navigate={navigate}/>;
+  return (
+    <RepositoryListContainer repositories={repositories} navigate={navigate} />
+  );
   // const repositoryNodes = repositories ? repositories.edges.map((edge) => edge.node) : [];
 
   // return (
