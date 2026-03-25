@@ -1,6 +1,7 @@
-import { Image, View, StyleSheet } from "react-native";
+import { Image, View, StyleSheet, Button } from "react-native";
 import Stats from "./Stats";
 import Text from "./Text";
+import * as Linking from "expo-linking";
 
 const styles = StyleSheet.create({
   tinyLogo: {
@@ -39,7 +40,13 @@ const RepositoryItem = ({
   reviewCount,
   ratingAverage,
   ownerAvatarUrl,
+  url,
+  details,
 }) => {
+  const onPress = () => {
+    Linking.openURL(url);
+  };
+
   return (
     <View style={styles.flexContainer} testID="repositoryItem">
       <View style={styles.flexContainerRow}>
@@ -72,6 +79,14 @@ const RepositoryItem = ({
         review={reviewCount}
         rating={ratingAverage}
       />
+      {details && (
+        <View style={styles.flexContainer}>
+          <Button
+            onPress={onPress}
+            title="Open in GitHub"
+          />
+        </View>
+      )}
     </View>
   );
 };

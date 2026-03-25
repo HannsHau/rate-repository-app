@@ -1,4 +1,5 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, Pressable } from "react-native";
+import { useNavigate } from "react-router-native";
 import RepositoryItem from "./RepositoryItem";
 
 import useRepositories from "../hooks/useRepositories";
@@ -12,26 +13,34 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, navigate }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
+
+  const onPressFunction = (repositoryId, navigate) => {
+    console.log("onPressFunction : ", repositoryId);
+    navigate(`/repository/${repositoryId}`);
+  };
 
   return (
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => (
-        <RepositoryItem
-          fullName={item.fullName}
-          description={item.description}
-          language={item.language}
-          stargazersCount={item.stargazersCount}
-          forksCount={item.forksCount}
-          reviewCount={item.reviewCount}
-          ratingAverage={item.ratingAverage}
-          ownerAvatarUrl={item.ownerAvatarUrl}
-        />
+        <Pressable onPress={() => onPressFunction(item.id, navigate)}  >
+          <RepositoryItem
+            fullName={item.fullName}
+            description={item.description}
+            language={item.language}
+            stargazersCount={item.stargazersCount}
+            forksCount={item.forksCount}
+            reviewCount={item.reviewCount}
+            ratingAverage={item.ratingAverage}
+            ownerAvatarUrl={item.ownerAvatarUrl}
+            details={false}
+          />
+        </Pressable>
       )}
     />
   );
@@ -39,8 +48,9 @@ export const RepositoryListContainer = ({ repositories }) => {
 
 const RepositoryList = () => {
   const { repositories } = useRepositories();
+  const navigate = useNavigate();
 
-  return <RepositoryListContainer repositories={repositories} />;
+  return <RepositoryListContainer repositories={repositories} navigate={navigate}/>;
   // const repositoryNodes = repositories ? repositories.edges.map((edge) => edge.node) : [];
 
   // return (
