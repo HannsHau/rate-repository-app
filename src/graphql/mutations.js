@@ -27,3 +27,14 @@ export const CREATEREVIEW = gql`
     }
   }
 `;
+
+export const CREATEUSER = gql`
+  mutation ($user: CreateUserInput) {
+    createUser(user: $user) {
+      id
+      createdAt
+      reviewCount
+      username
+    }
+  }
+`;

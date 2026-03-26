@@ -31,11 +31,6 @@ const AppBar = () => {
   });
 
   const username = data?.me?.username;
-  if (username) {
-    console.log("User: ", username);
-  } else {
-    console.log("no User");
-  }
 
   return (
     <View>
@@ -44,13 +39,24 @@ const AppBar = () => {
           <AppBarTab style={styles.item} link="/" text="Repositories" />
         </View>
         <View style={styles.item}>
-          {username && <AppBarTab style={styles.item} link="/createReview" text="Create a review" />}
+          {username && (
+            <AppBarTab
+              style={styles.item}
+              link="/createReview"
+              text="Create a review"
+            />
+          )}
         </View>
         <View style={styles.item}>
           {username ? (
             <AppBarTab style={styles.item} link="/signIn" text="Sign Out" />
           ) : (
             <AppBarTab style={styles.item} link="/signIn" text="Sign In" />
+          )}
+        </View>
+        <View style={styles.item}>
+          {!username && (
+            <AppBarTab style={styles.item} link="/signUp" text="Sign Up" />
           )}
         </View>
       </ScrollView>

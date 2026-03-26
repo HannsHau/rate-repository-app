@@ -1,9 +1,11 @@
 import { TextInput, View, Pressable, StyleSheet } from "react-native";
 import Text from "./Text";
+import useSignUp from "../hooks/useSignUp";
 import useSignIn from "../hooks/useSignIn";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-native";
+import { useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -34,11 +36,23 @@ const initialValues = {
 };
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required("Username is required"),
-  password: yup.string().required("Password is required"),
+  username: yup
+    .string()
+    .required("Username is required")
+    .min(5, "Username >= 5 character")
+    .max(30, "Username <= 30 character"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(5, "Username >= 5 character")
+    .max(50, "Username <= 50 character"),
+  passwordConfirm: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Password confirmation is required"),
 });
 
-export const LogInForm = ({ onSubmit }) => {
+export const LogInForm = ({ onSubmit, error }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -47,6 +61,7 @@ export const LogInForm = ({ onSubmit }) => {
 
   return (
     <View style={styles.container}>
+      <>{error && <Text style={styles.error}>{error}</Text>}</>
       <TextInput
         style={styles.input}
         placeholder="username"
@@ -68,6 +83,17 @@ export const LogInForm = ({ onSubmit }) => {
       {formik.touched.password && formik.errors.password && (
         <Text style={styles.error}>{formik.errors.password}</Text>
       )}
+      <TextInput
+        style={styles.input}
+        placeholder="password confirmation"
+        secureTextEntry="true"
+        value={formik.values.passwordConfirm}
+        onChangeText={formik.handleChange("passwordConfirm")}
+        onBlur={formik.handleBlur("passwordConfirm")}
+      />
+      {formik.touched.passwordConfirm && formik.errors.passwordConfirm && (
+        <Text style={styles.error}>{formik.errors.passwordConfirm}</Text>
+      )}
       <Pressable style={styles.button} onPress={formik.handleSubmit}>
         <Text
           color="textWhite"
@@ -81,22 +107,35 @@ export const LogInForm = ({ onSubmit }) => {
   );
 };
 
-const SignIn = () => {
-  const [signIn] = useSignIn();
+const SignUp = () => {
+  const signUp = useSignUp();
+  const signIn = useSignIn();
   const navigate = useNavigate();
+  const [error, setError] = useState();
 
   const onSubmit = async (values) => {
     const { username, password } = values;
 
     try {
-      await signIn({ username, password});
+      await signUp[0]({ username, password });
+      await signIn[0]({ username, password });
       navigate("/");
     } catch (e) {
-      console.log(e);
+      let errorMsg = "";
+      if (e.networkError?.result?.errors?.length) {
+        errorMsg = e.networkError.result.errors[0].message; // "Variable \"$review\" got invalid value \"55\"..."
+      } else if (e.graphQLErrors?.length) {
+        errorMsg = e.graphQLErrors[0].message;
+      } else if (e.networkError) {
+        errorMsg = e.networkError.message;
+      } else if (e.message) {
+        errorMsg = e.message;
+      }
+      setError(errorMsg);
     }
   };
 
-  return <LogInForm onSubmit={onSubmit} />;
+  return <LogInForm onSubmit={onSubmit} error={error} />;
 };
 
-export default SignIn;
+export default SignUp;
