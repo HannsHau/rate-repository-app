@@ -15,12 +15,20 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
+  flexContainerColumnSmall: {
+    flexGrow: 0,
+    flexShrink: 1,
+    display: "flex",
+    padding: 10,
+    minWidth: 40,
+    maxWidth: "100%",
+  },
   flexContainerColumn: {
     flexGrow: 1,
     flexShrink: 1,
     display: "flex",
     padding: 10,
-    minWidth: 50,
+    minWidth: 60,
     maxWidth: "100%",
   },
   flexContainerRating: {
@@ -53,7 +61,7 @@ const ReviewItem = ({ review }) => {
 
   return (
     <View style={styles.flexContainerRow}>
-      <View style={styles.flexContainerColumn}>
+      <View style={styles.flexContainerColumnSmall}>
         <View style={styles.flexContainerRating}>
           <Text fontWeight="bold" style={styles.Rating}>
             {review.rating}

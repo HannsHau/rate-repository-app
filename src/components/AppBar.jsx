@@ -44,6 +44,9 @@ const AppBar = () => {
           <AppBarTab style={styles.item} link="/" text="Repositories" />
         </View>
         <View style={styles.item}>
+          {username && <AppBarTab style={styles.item} link="/createReview" text="Create a review" />}
+        </View>
+        <View style={styles.item}>
           {username ? (
             <AppBarTab style={styles.item} link="/signIn" text="Sign Out" />
           ) : (

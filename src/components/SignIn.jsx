@@ -86,12 +86,10 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
-
     const { username, password } = values;
 
     try {
-      const { data } = await signIn({ username, password, navigate });
-      console.log('result: ', data.authenticate);
+      const { data } = await signIn({ username, password});
       navigate("/");
     } catch (e) {
       console.log(e);
