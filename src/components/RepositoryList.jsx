@@ -1,5 +1,4 @@
 import { FlatList, View, StyleSheet, Pressable } from "react-native";
-import Text from "./Text";
 import { useNavigate } from "react-router-native";
 import RepositoryItem from "./RepositoryItem";
 import { Picker } from "@react-native-picker/picker";

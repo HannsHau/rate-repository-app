@@ -133,7 +133,7 @@ const Review = () => {
     const { ownerName, rating, repositoryName, text } = values;
 
     try {
-      const createReview = await reviewHook[0]({
+      const createReview = await reviewHook.addReview({
         ownerName,
         rating,
         repositoryName,
