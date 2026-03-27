@@ -19,8 +19,15 @@ export default defineConfig([
   js.configs.recommended,
   {
     files: ["**/*.js", "**/*.jsx"],
-    extends: compat.extends("eslint:recommended", "plugin:react/recommended", "plugin:jest/recommended"),
-
+    extends: compat.extends(
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:jest/recommended",
+    ),
+    env: {
+      browser: true,
+      node: true,
+    },
     plugins: {
       react,
       "react-native": reactNative,

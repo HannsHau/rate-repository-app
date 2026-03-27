@@ -17,6 +17,7 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 export const RepositoryListContainer = ({
   repositories,
+  onEndReach,
   navigate,
   order,
   setOrder,
@@ -38,14 +39,16 @@ export const RepositoryListContainer = ({
           <Picker
             selectedValue={order}
             onValueChange={(itemValue, itemIndex) => {
-              console.log('itemValue: ', itemValue, itemValue.orderBy, itemValue.orderDirection)
+              console.log(
+                "itemValue: ",
+                itemValue,
+                itemValue.orderBy,
+                itemValue.orderDirection,
+              );
               setOrder(itemValue);
             }}
           >
-            <Picker.Item
-              label="Latest repositories"
-              value="CREATED_AT_DESC"
-            />
+            <Picker.Item label="Latest repositories" value="CREATED_AT_DESC" />
             <Picker.Item
               label="Highest rated repositories"
               value="RATING_AVERAGE_DESC"
@@ -73,45 +76,56 @@ export const RepositoryListContainer = ({
           />
         </Pressable>
       )}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
 
 const getOrderObject = (order) => {
-
   switch (order) {
     case "CREATED_AT_DESC":
       return {
         orderBy: "CREATED_AT",
         orderDirection: "DESC",
       };
-  case "RATING_AVERAGE_DESC":
-    return {
-      orderBy: "RATING_AVERAGE",
-      orderDirection: "DESC",
-    };
-  case "RATING_AVERAGE_ASC":
-    return {
-      orderBy: "RATING_AVERAGE",
-      orderDirection: "ASC",
-    };
-  default:
-    console.log("order unknown, return default: ", order);
-    return {
-      orderBy: "CREATED_AT",
-      orderDirection: "DESC",
-    };
+    case "RATING_AVERAGE_DESC":
+      return {
+        orderBy: "RATING_AVERAGE",
+        orderDirection: "DESC",
+      };
+    case "RATING_AVERAGE_ASC":
+      return {
+        orderBy: "RATING_AVERAGE",
+        orderDirection: "ASC",
+      };
+    default:
+      console.log("order unknown, return default: ", order);
+      return {
+        orderBy: "CREATED_AT",
+        orderDirection: "DESC",
+      };
   }
-}
+};
 
 const RepositoryList = () => {
   const [order, setOrder] = useState("CREATED_AT_DESC");
-  const { repositories } = useRepositories(getOrderObject(order));
+  const { repositories, fetchMore } = useRepositories({
+    first: 6,
+    ...getOrderObject(order)
+  }
+  
+  );
   const navigate = useNavigate();
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <RepositoryListContainer
       repositories={repositories}
+      onEndReach={onEndReach}
       navigate={navigate}
       order={order}
       setOrder={setOrder}
