@@ -12,9 +12,8 @@ const AppBarTab = ({ text, link, style }) => {
   const linkPressHandler = useLinkPressHandler(link); // Link's handler
 
   const onPressFunction = async () => {
-    console.log("pressed");
+
     if (text === "Sign Out") {
-      console.log("Sign Out pressed");
       await authStorage.removeAccessToken();
       apolloClient.resetStore();
     }

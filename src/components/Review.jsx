@@ -129,15 +129,6 @@ const Review = () => {
   const reviewHook = useReview();
   const navigate = useNavigate();
 
-  console.log(
-    "useReview returns:",
-    reviewHook,
-    "reviewHook:",
-    reviewHook,
-    typeof reviewHook,
-  );
-  //const [review] = reviewHook; // Destructure logged value
-
   const onSubmit = async (values) => {
     const { ownerName, rating, repositoryName, text } = values;
 

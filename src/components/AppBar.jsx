@@ -3,8 +3,7 @@ import Constants from "expo-constants";
 import AppBarTab from "./AppBarTab";
 import theme from "../theme";
 
-import { useQuery } from "@apollo/client/react";
-import { ME } from "../graphql/queries";
+import useCurrentUser from "../hooks/useCurrentUser";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,12 +24,8 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  // eslint-disable-next-line no-unused-vars
-  const { data, loading, error, refetch } = useQuery(ME, {
-    fetchPolicy: "cache-and-network",
-  });
-
-  const username = data?.me?.username;
+  const { currentUser } = useCurrentUser();
+  const username = currentUser?.username;
 
   return (
     <View>
@@ -44,6 +39,15 @@ const AppBar = () => {
               style={styles.item}
               link="/createReview"
               text="Create a review"
+            />
+          )}
+        </View>
+        <View style={styles.item}>
+          {username && (
+            <AppBarTab
+              style={styles.item}
+              link="/myReviews"
+              text="My reviews"
             />
           )}
         </View>
